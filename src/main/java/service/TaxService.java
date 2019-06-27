@@ -2,12 +2,15 @@ package service;
 
 import javax.xml.namespace.QName;
 import javax.xml.soap.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 public class TaxService {
-    String soapUrl      = "http://npchk.nalog.ru/FNSNDSCAWS_2?wsdl";
-    String requestUrl = "http://ws.unisoft/FNSNDSCAWS2/Request";
-    String action = "NdsRequest2";
-    String namespace  = "xs";
+    private String soapUrl      = "http://npchk.nalog.ru/FNSNDSCAWS_2?wsdl";
+    private String requestUrl = "http://ws.unisoft/FNSNDSCAWS2/Request";
+    private String action = "NdsRequest2";
+    private String namespace  = "xs";
 
     public String getState(String[] data) throws SOAPException {
 
@@ -16,8 +19,7 @@ public class TaxService {
         SOAPMessage soapResponse = soapConnect.call(soapMessage, soapUrl);
         SOAPElement soapElement = (SOAPElement) soapResponse.getSOAPBody().getChildElements().next();
         soapElement = (SOAPElement) soapElement.getChildElements().next();
-        String state = soapElement.getAttributeValue(new QName("State"));
-        return state;
+        return soapElement.getAttributeValue(new QName("State"));
         }
 
         private SOAPMessage postMessage(String[] dataToCheck) throws SOAPException {
@@ -37,6 +39,12 @@ public class TaxService {
 
             return soapMessage;
 
+        }
+
+        public String getDate() {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy", Locale.ENGLISH);
+            LocalDate localDate = LocalDate.now();
+            return localDate.format(formatter);
         }
 
     }

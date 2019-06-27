@@ -1,9 +1,6 @@
 import service.TaxService;
 
 import javax.xml.soap.SOAPException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Locale;
 import java.util.Scanner;
 
 public class Application {
@@ -26,19 +23,17 @@ public class Application {
 
 
     public static void main(String[] args) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy", Locale.ENGLISH);
-        LocalDate localDate = LocalDate.now();
-        String dt = localDate.format(formatter);
         TaxService taxService = new TaxService();
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Введите данные для поиска через пробел или \"exit\" для выхода.");
+        System.out.println("Введите данные для поиска через пробел или \"exit\" для выхода. " +
+                "\n");
         String dataInput;
         while (!(dataInput = scanner.nextLine()).equals("exit")) {
             int i = 0;
             String[] information = new String[]{
                     "INN=",
                     "KPP=",
-                    "DT=" + dt
+                    "DT=" + taxService.getDate()
             };
             String[] dataToCheck = dataInput.split(" ");
             if (dataToCheck.length > 3) {
