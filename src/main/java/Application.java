@@ -3,8 +3,6 @@ import service.TaxService;
 import javax.xml.soap.SOAPException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -27,7 +25,7 @@ public class Application {
     };
 
 
-    public static void main(String[] args) throws SOAPException {
+    public static void main(String[] args) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy", Locale.ENGLISH);
         LocalDate localDate = LocalDate.now();
         String dt = localDate.format(formatter);
